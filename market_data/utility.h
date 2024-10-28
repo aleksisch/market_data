@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include "schemas.h"
-
 namespace market_data {
 using PriceT = float;
 

@@ -30,8 +30,11 @@ FetchContent_MakeAvailable(daw_json_link)
 
 add_executable(coinbase_parser main.cpp
         market_data/coinbase.cpp
+        rolling_stats/rolling_buffer.cpp
+        rolling_stats/EMA.h
 )
-target_link_libraries( coinbase_parser daw::daw-json-link OpenSSL::SSL OpenSSL::Crypto)
+target_link_libraries(coinbase_parser daw::daw-json-link OpenSSL::SSL OpenSSL::Crypto)
+target_include_directories(coinbase_parser PUBLIC ${PROJECT_SOURCE_DIR})
 
 enable_testing()
 
@@ -42,7 +45,6 @@ add_subdirectory(fuzztest SYSTEM)
 include(GoogleTest)
 
 link_fuzztest(ema_tests)
-gtest_discover_tests(ema_tests)
 
 add_executable(serde_tests tests/serde_tests.cpp)
 target_link_libraries(
@@ -50,5 +52,8 @@ target_link_libraries(
         GTest::gtest_main
 )
 target_link_libraries( serde_tests daw::daw-json-link)
+
 target_include_directories(serde_tests PUBLIC ${PROJECT_SOURCE_DIR})
+target_include_directories(ema_tests PUBLIC ${PROJECT_SOURCE_DIR})
 gtest_discover_tests(serde_tests)
+gtest_discover_tests(ema_tests)
