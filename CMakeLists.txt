@@ -19,19 +19,19 @@ add_link_options(-fsanitize=address)
 find_package( Boost REQUIRED)
 find_package(OpenSSL REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
+add_subdirectory(CLI11) # Command line arguments
 
 include( FetchContent )
 FetchContent_Declare(
         daw_json_link
-        GIT_REPOSITORY https://github.com/beached/daw_json_link
+        GIT_REPOSITORY https://github.com/beached/daw_json_link # json serde library
         GIT_TAG release
 )
 FetchContent_MakeAvailable(daw_json_link)
 
 add_executable(coinbase_parser main.cpp
-        market_data/coinbase.cpp
-        rolling_stats/rolling_buffer.cpp
-        rolling_stats/EMA.h
+        market_data/schemas.cpp
+        market_data/coinbase_coro.cpp
 )
 target_link_libraries(coinbase_parser daw::daw-json-link OpenSSL::SSL OpenSSL::Crypto)
 target_include_directories(coinbase_parser PUBLIC ${PROJECT_SOURCE_DIR})
@@ -46,7 +46,7 @@ include(GoogleTest)
 
 link_fuzztest(ema_tests)
 
-add_executable(serde_tests tests/serde_tests.cpp)
+add_executable(serde_tests tests/serde_tests.cpp market_data/schemas.cpp)
 target_link_libraries(
         serde_tests
         GTest::gtest_main

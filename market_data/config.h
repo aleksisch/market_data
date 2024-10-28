@@ -16,6 +16,7 @@ struct Config {
   uint32_t port;
   std::string path;
   std::string ticket_channel;
+  std::string subscribe_channel;
 };
 
 inline Config getConfig(Exchange exch) {
@@ -26,6 +27,7 @@ inline Config getConfig(Exchange exch) {
           .port = 443,
           .path = "",
           .ticket_channel = "ticker",
+          .subscribe_channel = "subscribe",
       };
   }
 }

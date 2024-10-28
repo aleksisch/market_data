@@ -4,10 +4,14 @@
 
 #pragma once
 
-namespace market_data {
-using PriceT = float;
+#include <string>
 
-PriceT StringToPrice(const std::string& price) {
+namespace market_data {
+
+using PriceT = float;
+using TimeT = uint64_t;
+
+inline PriceT StringToPrice(const std::string& price) {
   return std::stod(price);
 }
 }  // namespace market_data
