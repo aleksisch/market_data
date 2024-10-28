@@ -18,7 +18,7 @@ namespace market_data {
 class MarketData {
    public:
     MarketData(std::ofstream&& out) : out_(std::move(out)) {
-        dumper::csv_dump(out, "traded_pair", "mid_price", "price", "time",
+        dumper::csv_dump(out_, "traded_pair", "mid_price", "price", "time",
                          "mid_price_ema", "price_ema");
     }
 
@@ -44,7 +44,7 @@ class MarketData {
     // unordered map for simplicity, however all trading pairs can be enumerated and use faster container e.g. vector
     using EmaT = std::unordered_map<std::string, rolling_stats::EMA>;
 
-    const int WINDOW = 5;
+    const int WINDOW = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::seconds(5)).count();
 
     EmaT midPriceEMA_;
     EmaT priceEMA_;

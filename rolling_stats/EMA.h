@@ -31,6 +31,8 @@ class EMA {
         if (last_ == 0) {
             value_ += data;
         } else {
+            // todo: if updates are batched in time, then we'll use first one and forget about others.
+            // I'm not sure how it should be handled, formally it's correct.
             value_ += getMultiplier(time - last_) * (data - value_);
         }
         last_ = time;

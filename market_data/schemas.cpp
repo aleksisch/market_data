@@ -27,17 +27,15 @@ market_data::CoinBaseTicker::CoinBaseTicker(
         throw std::runtime_error("Failed to parse timestamp");
     }
     std::string fraction;
-    long long micros = 0LL;
+    std::chrono::microseconds micros = {};
     if (ss >> fraction) {
         fraction = fraction.substr(1, fraction.size() - 2);  // .123Z => 123
         // Convert the fractional seconds to milliseconds
-        micros = std::stoll(fraction);
-        assert(micros < 1 '000' 000);
-        micros %= 1 '000' 000;
+        micros = std::chrono::microseconds(std::stoll(fraction));
+        assert(micros.count() < 1000000);
     }
     auto duration = std::chrono::system_clock::from_time_t(std::mktime(&tm))
-                        .time_since_epoch() +
-                    std::chrono::microseconds(micros);
+                        .time_since_epoch() + micros;
     time =
         std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
 }

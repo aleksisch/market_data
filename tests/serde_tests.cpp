@@ -62,5 +62,5 @@ TEST(Deserialization, Ticket) {
     ASSERT_FLOAT_EQ(ticker.price, 1285.22);
     ASSERT_FLOAT_EQ(ticker.best_bid, 1285.04);
     ASSERT_FLOAT_EQ(ticker.best_ask, 1285.27);
-    ASSERT_EQ(ticker2.getTime() - ticker.getTime(), 2 '000' 200);
+    ASSERT_EQ(ticker2.getTime() - ticker.getTime(), 2000200);
 }
