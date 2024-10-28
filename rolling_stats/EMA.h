@@ -18,31 +18,31 @@ using TimeT = market_data::TimeT;
      * alpha = 1 - e^{-dt/T}, where dt is time elapsed from last update, and T is time window
      */
 class EMA {
- public:
-  EMA(TimeT window) : window_(window) {}
+   public:
+    EMA(TimeT window) : window_(window) {}
 
-  DataT get() const { return value_; }
+    DataT get() const { return value_; }
 
-  /**
+    /**
          * @param add new event
          * @param prev removed events
          */
-  void add(DataT data, TimeT time) {
-    if (last_ == 0) {
-      value_ += data;
-    } else {
-      value_ += getMultiplier(time - last_) * (data - value_);
+    void add(DataT data, TimeT time) {
+        if (last_ == 0) {
+            value_ += data;
+        } else {
+            value_ += getMultiplier(time - last_) * (data - value_);
+        }
+        last_ = time;
     }
-    last_ = time;
-  }
 
-  DataT getMultiplier(TimeT delta) const {
-    return 1 - std::exp(-(delta / static_cast<double>(window_)));
-  }
+    DataT getMultiplier(TimeT delta) const {
+        return 1 - std::exp(-(delta / static_cast<double>(window_)));
+    }
 
- private:
-  DataT value_{};
-  TimeT last_{};
-  const TimeT window_;
+   private:
+    DataT value_{};
+    TimeT last_{};
+    const TimeT window_;
 };
 }  // namespace rolling_stats

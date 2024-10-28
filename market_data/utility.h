@@ -12,6 +12,6 @@ using PriceT = float;
 using TimeT = uint64_t;
 
 inline PriceT StringToPrice(const std::string& price) {
-  return std::stod(price);
+    return std::stod(price);
 }
 }  // namespace market_data

@@ -9,7 +9,7 @@
 #include "market_data/schemas.h"
 
 TEST(Deserialization, Ticket) {
-  std::string json_ticket1 = R"(
+    std::string json_ticket1 = R"(
     {
       "type": "ticker",
       "sequence": 37475248783,
@@ -31,7 +31,7 @@ TEST(Deserialization, Ticket) {
     }
     )";
 
-  std::string json_ticket2 = R"(
+    std::string json_ticket2 = R"(
     {
       "type": "ticker",
       "sequence": 37475248783,
@@ -53,14 +53,14 @@ TEST(Deserialization, Ticket) {
     }
     )";
 
-  auto ticker = daw::json::from_json<market_data::CoinBaseTicker>(
-      std::string_view(json_ticket1));
-  auto ticker2 = daw::json::from_json<market_data::CoinBaseTicker>(
-      std::string_view(json_ticket2));
-  ASSERT_EQ(ticker.sequence, 37475248783);
-  ASSERT_EQ(ticker.product_id, "ETH-USD");
-  ASSERT_FLOAT_EQ(ticker.price, 1285.22);
-  ASSERT_FLOAT_EQ(ticker.best_bid, 1285.04);
-  ASSERT_FLOAT_EQ(ticker.best_ask, 1285.27);
-  ASSERT_EQ(ticker2.getTime() - ticker.getTime(), 2 '000' 200);
+    auto ticker = daw::json::from_json<market_data::CoinBaseTicker>(
+        std::string_view(json_ticket1));
+    auto ticker2 = daw::json::from_json<market_data::CoinBaseTicker>(
+        std::string_view(json_ticket2));
+    ASSERT_EQ(ticker.sequence, 37475248783);
+    ASSERT_EQ(ticker.product_id, "ETH-USD");
+    ASSERT_FLOAT_EQ(ticker.price, 1285.22);
+    ASSERT_FLOAT_EQ(ticker.best_bid, 1285.04);
+    ASSERT_FLOAT_EQ(ticker.best_ask, 1285.27);
+    ASSERT_EQ(ticker2.getTime() - ticker.getTime(), 2 '000' 200);
 }
