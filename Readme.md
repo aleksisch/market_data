@@ -6,3 +6,10 @@
 - `cd build && make`
 
 We forced to use `clang`, because `google FuzzTest` is not compatible with `gcc` yet.
+
+### Run
+
+```
+./coinbase_parser -f coinbase.csv --products BTC-USD ETH-USD
+```
+Will launch session which will subscribe to `BTC-USD` and `ETH-USD` and write to `coinbase.csv` 
